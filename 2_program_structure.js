@@ -98,7 +98,7 @@ for (let current = 20; ; current = current + 1) {
     }
 }
 
-// continue jumps out of the body and continues wiht the next loop iteration
+// continue jumps out of the body and continues with the next loop iteration
 
 // updating bindings succintly
 counter = counter + 1;
