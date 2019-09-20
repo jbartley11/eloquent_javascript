@@ -116,10 +116,71 @@ reduce([1,2,3,4], (a,b) => a + b, 0);
 // for each element in array add it to the next one and return value
 [1,2,3,4].reduce((a, b) => a + b);
 
-// use reduce twice to find the script wiht the most characters
+// use reduce twice to find the script with the most characters
 
 function characterCount(script) {
     return script.ranges.reduce((count, [from, to]) => {
+
+        console.log(`count: ${count}`);
         return count + (to - from);
     }, 0);
 }
+
+SCRIPTS.reduce((a,b) => {
+
+    // for each object compare it to the next
+    console.log(`comparing count of ${a.name} and ${b.name}`);
+    console.log(`a ranges ${a.ranges}`);
+    console.log(`b ranges ${b.ranges}`);
+    console.log(`a ranges ${a.ranges}`);
+    
+
+    return characterCount(a) < characterCount(b) ? b : a;
+})
+
+// the code to do the above without higher order functions is not much more work
+// Higher order functions start to shine when we use them together
+
+// find average year of origin for living and dead scripts
+function average(array) {
+
+    // add all the values in the array together and divide by length
+    return array.reduce((a,b) => a + b) / array.length;
+}
+
+// need to use filter to get array of all years of living and map to array
+average(SCRIPTS.filter(s => s.living).map(s => s.year));
+
+// average of dead
+average(SCRIPTS.filter(s => !s.living).map(s => s.year));
+
+// think of it as a pipeline
+// we start with all scripts, filter out the living, take the years from those, then average them
+
+// the two approaches are quite different
+// map and filter produces new arrays
+// the for loop is only focusing on the numbers, so it'll be quicker when it comes to large arrays
+
+
+// some method - takes a test function and tells you whether that function returns true for any of the elements in the array
+// function to test to see if character code is in a script
+
+function characterScript(code) {
+    // for each script in SCRIPTS
+    for (let script of SCRIPTS) {
+
+        // look at ranges array and test to see if code falls
+        // in between any of the from and to arrays
+        if (script.ranges.some(([from, to]) => {
+            return code >= from && code < to;
+        })) {
+            // if it does add return script
+            return script;
+        }
+    }
+    // if code does not exist in any script return null
+    return null;
+}
+
+// to get character code
+// use codePointAt(0);
