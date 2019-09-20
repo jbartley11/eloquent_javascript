@@ -1,4 +1,5 @@
-// array of places
+// array of roads between two locations
+// graph - collection of points with lines in between them
 const roads = [
     "Alice's House-Bob's House",
     "Alice's House-Cabin",
